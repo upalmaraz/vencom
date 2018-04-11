@@ -1,0 +1,41 @@
+- name: Copy samba configuration
+  template:
+    src: smb.conf.j2
+    dest: "/etc/samba/smb.conf"
+  tags:
+    - samba
+    
+- name: Create Samba restricted group
+  group:
+    name: "{{ item.name }}"
+    state: present
+  with_items: "{{ samba_group }}"
+  tags:
+    - samba_group
+
+- name: Add the User(s) to Samba group 
+  user:
+    name: "{{ item.name }}" 
+    groups: "{{ item.group }}" 
+    append: yes
+  with_items: "{{ samba_users }}" 
+  tags:
+    - samba_users
+
+- name: Create Samba Password for User(s)
+  shell: "(echo {{ item.smbpasswd }}; echo {{ item.smbpasswd }}) | smbpasswd -s -a {{ item.name }}"
+  with_items: "{{ samba_users }}"
+  tags:
+    - samba_users
+
+- name: Delete samba user
+  shell: "smbpasswd -x {{ item.name }}"
+  with_items: "{{ delete_user }}"
+  tags:
+    - delete_user
+
+- name: Delete user 
+  shell: "deluser {{ item.name }}"
+  with_items: "{{ delete_user }}"
+  tags:
+    - delete_user

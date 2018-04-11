@@ -1,0 +1,10 @@
+- name: start samba
+  service:
+    name: samba
+    state: started
+
+- name: restart samba
+  service:
+    name: samba
+    state: restarted
+    
