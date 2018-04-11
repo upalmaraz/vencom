@@ -1,0 +1,46 @@
+{
+    "builders": [
+    {
+    "ami_name": "prod_samba({{isotime|clean_ami_name}})",
+    "instance_type": "t2.micro",
+    "region": "us-east-1",
+    "source_ami": "ami-9dcfdb8a",
+    "ssh_username": "ubuntu",
+    "type": "amazon-ebs"
+    }
+    ],
+    "provisioners": [
+      {
+        "inline": [
+          "sudo apt-get -y update && sudo apt-get -y dist-upgrade",
+          "sudo apt-get install -y python python-dev libffi-dev python-setuptools pypy-lib libyaml-dev libgnutls-openssl-dev libssl-dev wget",
+          "wget https://bootstrap.pypa.io/get-pip.py",
+          "sudo python get-pip.py",
+          "sudo pip install ansible",
+          "sudo pip install ec2tagread"
+        ],
+    "type": "shell"
+    },
+    {
+        "type": "shell",
+        "inline": [
+          "mkdir -p {{user `tmp_dir`}}/"
+        ]
+      },
+      {
+        "type": "file",
+        "source": "../ansible",
+        "destination": "/tmp"
+      },
+      {
+        "type": "ansible-local",
+        "staging_directory": "/tmp/ansible",
+        "extra_arguments": [ "--extra-vars \"tmp_dir=/tmp\"" ],
+        "playbook_dir": "../ansible",
+        "group_vars": "../ansible/production/group_vars",
+        "playbook_file": "../ansible/packer.yml",
+        "inventory_groups": "packer,all"
+      }
+        ]
+    }
+  
