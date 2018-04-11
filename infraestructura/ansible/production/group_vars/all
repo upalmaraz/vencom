@@ -1,0 +1,9 @@
+project: vencom
+stages: production
+github_admins:
+  - upalmaraz
+  - aws-vencom
+github_authorized:
+  - upalmaraz
+  - aws-vencom
+  

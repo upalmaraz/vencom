@@ -1,0 +1,25 @@
+- name: Setup samba server
+  hosts: vencom
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Create operator user
+      user: name=operator state=present shell=/bin/bash
+      tags:
+        - authorize
+    
+    - name: Allow passwordless sudo for operator user
+      lineinfile:
+        dest: /etc/sudoers
+        state: present
+        line: 'operator ALL=(ALL) NOPASSWD: ALL'
+        validate: 'visudo -cf %s'   
+      tags:
+        - authorize
+
+    - name: Ensure admin SSH keys are installed for admin user
+      authorized_key: user=operator key=https://github.com/{{ item }}.keys
+      with_items: "{{ github_admins }}"
+      tags:
+        - authorize
