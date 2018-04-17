@@ -1,0 +1,48 @@
+WRITABLE: yes
+VETO_FILES: /*.rm/*.flv/*.avi/*.qt/*.qtl/*.rpm/*.smk/*.wm/*.wmv/*.wob/*.mp3/*.mp4/*.mid/*.wav/*.wma/*.cda/*.mid/*.ogg/*.ogm/*.aac/*.ac3/*.flc/*.m4a/*.wmdb/*.mov/*.h264/*.mpg*/*.mid/*.xn/*.div/*.bik/*.m1v/*.movi/*.mpa/*.woE
+WORKGROUP: WORKGROUP
+LOG_FILE: var/log/samba/log.%m
+MAX_LOG_SIZE: 1000
+SYSLOG: 0
+PANIC_ACTION: /usr/share/samba/panic-action %d
+ENCRYPT_PASSWORDS: true
+PASSDB_BACKEND: tdbsam
+OBEY_PAM_RESTRICTIONS: yes
+UNIX_PASSWORD_SYNC: yes
+PAM_PASSWORD_CHANGE: yes
+MAP_TO_GUEST: bad user
+USERSHARE_ALLOW_GUESTS: yes
+
+samba_group:
+  - name: 'sistemas'
+  - name: 'legal'
+  - name: 'previvale'
+  - name: 'actuaria'
+  - name: 'imss'
+  - name: 'tesoreria'
+  - name: 'nominas'
+  - name: 'admindper'
+  - name: 'saps'
+  - name: 'contraloria'
+  - name: 'RH'
+  - name: 'map'
+  - name: 'contadores'
+
+samba_users:
+  - name: 'ngranados'
+    smbpasswd: 'termporal12'
+    group: 
+      - 'sistemas'
+      - 'legal'
+  - name: 'pgomez'
+    smbpasswd: 'temporal12'
+    group: 
+      - 'sistemas'
+      - 'previvale'
+  - name: 'uperez'
+    smbpasswd: 'temporal12'
+    group:
+      - 'sistemas'
+
+delete_user:
+  - name: 'uperez'
