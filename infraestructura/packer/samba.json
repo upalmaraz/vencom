@@ -16,6 +16,7 @@
           "sudo apt-get install -y python python-dev libffi-dev python-setuptools pypy-lib libyaml-dev libgnutls-openssl-dev libssl-dev wget",
           "wget https://bootstrap.pypa.io/get-pip.py",
           "sudo python get-pip.py",
+          "echo 'America/Mexico_City' | sudo tee /etc/timezone && sudo dpkg-reconfigure -f noninteractive tzdata",
           "sudo pip install ansible",
           "sudo pip install ec2tagread"
         ],
@@ -43,4 +44,3 @@
       }
         ]
     }
-  

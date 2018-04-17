@@ -15,38 +15,38 @@
     - software
 
  #Repositorio se descomenta solo de primera vez, despues se deja comentado para impedir errores
-# - name: Create directory vencom
-#   file: path=/vencom/vencom state=directory owner=operator group=operator
+- name: Create directory vencom
+  file: path=/vencom/vencom state=directory owner=operator group=operator
 
-# - name: Create directory vencom_backup
-#   file: path=/vencom/vencom_backup state=directory owner=operator group=operator
+- name: Create directory vencom_backup
+  file: path=/vencom/vencom_backup state=directory owner=operator group=operator
   
-# - name: Create directory vencom_glacier
-#   file: path=/vencom/vencom_glacier state=directory owner=operator group=operator  
+- name: Create directory vencom_glacier
+  file: path=/vencom/vencom_glacier state=directory owner=operator group=operator  
 
-# - name: Repositorio s3fs
-#   command: git clone https://github.com/s3fs-fuse/s3fs-fuse.git
+- name: Repositorio s3fs
+  command: git clone https://github.com/s3fs-fuse/s3fs-fuse.git
 
-# - name: Render s3fs scripts templates to tmp files
-#   template: src='{{ item }}' dest='/tmp/{{ item }}' mode="a=rx" force=yes
-#   with_items:
-#     - s3fs.sh
-#   tags:
-#     - initscripts
+- name: Render s3fs scripts templates to tmp files
+  template: src='{{ item }}' dest='/tmp/{{ item }}' mode="a=rx" force=yes
+  with_items:
+    - s3fs.sh
+  tags:
+    - initscripts
 
-# - name: upload templates to S3
-#   command: sh /tmp/{{ item }}  
-#   with_items:
-#     - s3fs.sh
-#   tags:
-#     - s3fsscripts
+- name: upload templates to S3
+  command: sh /tmp/{{ item }}  
+  with_items:
+    - s3fs.sh
+  tags:
+    - s3fsscripts
 
-# - name: clean up tmp files
-#   file: name=/tmp/{{ item }} state=absent
-#   with_items:
-#     - s3fs.sh
-#   tags:
-#     - s3fsscripts
+- name: clean up tmp files
+  file: name=/tmp/{{ item }} state=absent
+  with_items:
+    - s3fs.sh
+  tags:
+    - s3fsscripts
 
 - name: Render mount scripts templates to tmp files
   template: src='{{ item }}' dest='/tmp/{{ item }}' mode="a=rx" force=yes
