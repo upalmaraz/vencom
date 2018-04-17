@@ -7,4 +7,3 @@
   service:
     name: samba
     state: restarted
-    
