@@ -1,0 +1,20 @@
+- name: Create directory scripts
+  file: path=/home/operator/vencom/scripts state=directory owner=operator group=sistemas
+
+- name: Render sapsResp scripts templates to tmp files
+  template: src='{{ item }}' dest='/home/operator/vencom/scripts/{{ item }}' mode="a=rwx" force=yes
+  with_items:
+    - sapsResp.sh
+  tags:
+    - sapsResp
+
+##Configure script execution in Cron
+- cron:
+    name: Respaldo Total
+    minute: "1"
+    hour: "0"
+    user: operator
+    job: "sh /home/operator/vencom/scripts/sapsResp.sh"
+    state: present
+  tags: 
+    - sapsResp

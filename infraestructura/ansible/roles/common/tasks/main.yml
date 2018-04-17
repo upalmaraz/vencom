@@ -1,0 +1,44 @@
+- name: Ensure sudo is installed
+  apt: name=sudo state=present
+  tags:
+    - authorize
+
+- name: purge weenies editors
+  apt: name=nano state=absent purge=yes
+
+- name: install basic packages
+  apt: name={{ item }} state=present
+  with_items:
+    - vim
+    - git
+    - htop
+    - mailutils
+    - tree
+    - wget
+    - jq
+    - tcpdump
+    - multitail
+    - ngrep
+    - strace
+    - dstat
+    - ncdu
+    - speedometer
+    - unzip
+    - aha
+  tags:
+    - software
+
+- name: install pip
+  apt: name=python-pip state=present
+  tags:
+    - software
+
+- name: install some pip packages
+  pip: name={{ item }}
+  with_items:
+    - awscli
+    - botocore
+    - testinfra
+    - passlib
+  tags:
+    - software
