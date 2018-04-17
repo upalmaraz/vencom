@@ -4,7 +4,7 @@
 
 ## Crear imagen con Packer
 ```sh
-packer build --only=amazon-ebs samba.json 
+packer build samba.json 
 ```
 
 ## Aprovisionamiento en Terraform
@@ -31,7 +31,7 @@ ansible-playbook -i production samba.yml --tags "samba"
 
 ### Configurar tacoma
 
-En tu local debe haber un archivo con el dombre `.tacoma.yml` en el cual vamos a configurar nuestro acceso a aws con ello al servidor.
+En tu local debe haber un archivo con el nombre `.tacoma.yml` en el cual vamos a configurar nuestro acceso a aws con ello al servidor.
 ```sh
  project:
    aws_identity_file: "/path/to/pem/file/my_project.pem"
